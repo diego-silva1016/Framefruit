@@ -1,11 +1,25 @@
-import { createContext, useContext, useState } from 'react';
-
+import { createContext, useContext, useEffect, useState } from 'react';
 import Proptypes from 'prop-types';
+import { useAuth } from '../auth';
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+  const { user } = useAuth();
+  const nameToLocalStorage = `@framefruit: cart${user?.id}`;
+  const [cart, setCart] = useState(() => {
+    const shoppingCart = localStorage.getItem(nameToLocalStorage);
+
+    if (shoppingCart) return JSON.parse(shoppingCart);
+    return [];
+  });
+
+  useEffect(() => {
+    if (cart.length === 0) localStorage.removeItem(nameToLocalStorage);
+    else if (user) {
+      localStorage.setItem(nameToLocalStorage, JSON.stringify(cart));
+    }
+  }, [cart, nameToLocalStorage, user]);
 
   const addProduct = product => {
     const existProductInCart = cart.find(item => item.id === product.id);

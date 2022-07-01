@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Main, ProductContainer } from './styles';
 import Input from '../../components/Input';
 import dadosMock from '../../mock/dadosMock';

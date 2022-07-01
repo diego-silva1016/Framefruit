@@ -5,6 +5,7 @@ import Proptypes from 'prop-types';
 const AuthContext = createContext();
 
 const adminUser = {
+  id: 1,
   name: 'Diego Ribeiro',
   email: 'diego2222110@gmail.com',
   password: '123456',
